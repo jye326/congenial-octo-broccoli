@@ -2,7 +2,7 @@ package racingcar.util;
 
 public enum OUTPUT_MESSAGE {
     // 일반 정적 출력 문구 예시
-    openingComment("안녕하세요. W편의점입니다.\n현재 보유하고 있는 상품입니다.\n"),
+    ASK_CAR_NAMES("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)"),
     divider("===================================="),
     doubleTab("\t\t"),
     // format 사용한 가변 출력 문구 예시
