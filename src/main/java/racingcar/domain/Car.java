@@ -17,4 +17,11 @@ public class Car {
             this.progress++;
         }
     }
+
+    public String getName() {
+        return name;
+    }
+    public int getProgress() {
+        return progress;
+    }
 }
