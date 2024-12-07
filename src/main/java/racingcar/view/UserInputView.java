@@ -3,6 +3,7 @@ package racingcar.view;
 import camp.nextstep.edu.missionutils.Console;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import racingcar.util.ERROR_MESSAGE;
@@ -21,19 +22,37 @@ public class UserInputView {
         }
         return carNames;
     }
-    // 차 검증 후 명단 제출, 나중에 쪼갤수있으면 쪼개자.
+
     private ArrayList<String> validateCarNames(String inputString) throws IOException {
-        Pattern pattern = Pattern.compile(REGEX_PATTERN.CAR_NAMES_PATTERN.toString());
+        Pattern pattern = Pattern.compile(REGEX_PATTERN.CAR_NAMES_PATTERN.getRegexPattern());
         Matcher matcher = pattern.matcher(inputString);
-        ArrayList<String> carNames = new ArrayList<>();
         if (matcher.matches()) {
-            for (int i = 1; i <= matcher.groupCount(); i++) {
-                carNames.add(matcher.group(i));
-            }
-            return carNames;
+            return splitCarNames(inputString);
         }
         throw new IllegalArgumentException(ERROR_MESSAGE.INPUT_FORMAT_ERROR.toString());
     }
+
+    private ArrayList<String> splitCarNames(String inputString) {
+        return new ArrayList<>(Arrays.asList(inputString.split(",")));
+    }
+
+    public int readTryTimes() {
+        String input = Console.readLine();
+        if (validateOnlyNumber(input)) {
+            return Integer.parseInt(input);
+        }
+        throw new IllegalArgumentException(ERROR_MESSAGE.INPUT_FORMAT_ERROR.toString());
+    }
+
+    private boolean validateOnlyNumber(String inputString) {
+        Pattern pattern = Pattern.compile(REGEX_PATTERN.ONLY_NUMBER.getRegexPattern());
+        Matcher matcher = pattern.matcher(inputString);
+        if (matcher.matches()) {
+            return true;
+        }
+        return false;
+    }
+
 
     // 1. 사용자 입력 읽기
     // 2. 정규식 패턴을 적용한 validation (정규식 수정 필요)
